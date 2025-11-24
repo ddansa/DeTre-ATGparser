@@ -105,3 +105,7 @@ This tool is designed to parse publicly available race information from saved HT
 ## ⚠️ Disclaimer
 
 This tool is for personal data analysis only. Always respect ATG's terms of service and use responsibly.
+
+---
+
+*Web-app för att läsa av ATG's startlistor och dumpa relevant data*
