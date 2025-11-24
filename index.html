@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Racing Data Extractor v2</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐎 Horse Racing Data Extractor v2</h1>
+            <p>Extract structured data from saved race pages</p>
+        </div>
+
+        <div class="content">
+            <div class="status" id="status"></div>
+            
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Click to select or drag & drop HTML file</div>
+                <div class="upload-hint">Saved race page (HTML, TXT, or any text file)</div>
+                <input type="file" id="fileInput" class="file-input" accept=".html,.htm,.txt,*">
+                
+                <div class="debug-option">
+                    <label>
+                        <input type="checkbox" id="debugMode">
+                        <span>Debug mode (include column headers)</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="loader" id="loader"></div>
+
+            <div class="results-section" id="resultsSection">
+                <div class="stats" id="stats"></div>
+                
+                <div class="preview">
+                    <h3>Data Preview (First 3 horses)</h3>
+                    <pre id="preview"></pre>
+                </div>
+
+                <div class="actions">
+                    <button class="btn" onclick="handleDownloadJSON()">📥 Download JSON</button>
+                    <button class="btn" onclick="handleDownloadCSV()">📥 Download CSV</button>
+                    <button class="btn btn-secondary" onclick="handleCopyToClipboard()">📋 Copy JSON</button>
+                    <button class="btn btn-secondary" onclick="reset()">🔄 Process Another File</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>No data is uploaded to any server. All processing happens locally in your browser.</p>
+        </div>
+    </div>
+
+    <!-- Load scripts in order: selectors -> parser -> export -> ui -->
+    <script src="selectors.js"></script>
+    <script src="parser.js"></script>
+    <script src="export.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>
