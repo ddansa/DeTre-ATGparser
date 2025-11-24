@@ -8,20 +8,16 @@
 
 ### Step 2: Create the Bookmarklet
 
-**Option A: Drag and Drop** (Easiest)
-1. Open this file in a browser
-2. Drag the link below to your bookmarks bar:
-
-   <a href="javascript:(function(){const html=document.body.outerHTML;const blob=new Blob([html],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');const date=new Date().toISOString().split('T')[0];const title=document.title.replace(/[^a-z0-9]/gi,'_');a.href=url;a.download=`ATG_${title}_${date}.html`;a.click();URL.revokeObjectURL(url);})();">📥 Extract ATG Race Data</a>
-
-**Option B: Manual Creation**
+**Method: Manual Creation**
 1. Right-click your bookmarks bar → "Add page" or "New bookmark"
-2. Name it: `Extract ATG Race Data`
-3. Copy the code below and paste it as the URL:
+2. Name it: `📥 Extract ATG Race Data` (or any name you like)
+3. Copy the **entire code** below (including `javascript:`) and paste it as the URL/Location:
 
-```
+```javascript
 javascript:(function(){const html=document.body.outerHTML;const blob=new Blob([html],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');const date=new Date().toISOString().split('T')[0];const title=document.title.replace(/[^a-z0-9]/gi,'_');a.href=url;a.download=`ATG_${title}_${date}.html`;a.click();URL.revokeObjectURL(url);})();
 ```
+
+**⚠️ Important:** Make sure to copy the **entire line** starting with `javascript:` - this is required for the bookmarklet to work!
 
 ### Step 3: Use It!
 1. Go to any ATG race page (e.g., https://www.atg.se/spel/...)
