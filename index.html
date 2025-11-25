@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horse Racing Data Extractor v2</title>
+    <title>Horse Racing Data Extractor</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🐎 Horse Racing Data Extractor v2</h1>
+            <h1>🐎 Horse Racing Data Extractor</h1>
             <p>Extract structured data from saved race pages</p>
         </div>
 
@@ -46,6 +46,49 @@
                     <button class="btn btn-secondary" onclick="handleCopyToClipboard()">📋 Copy JSON</button>
                     <button class="btn btn-secondary" onclick="reset()">🔄 Process Another File</button>
                 </div>
+
+                <div class="excel-export-section">
+                    <h3>📊 Excel Format Export</h3>
+                    <p class="excel-hint">Export data in vertical format for easy pasting into Excel</p>
+                    
+                    <!-- Export Everything -->
+                    <div class="excel-option">
+                        <h4>1️⃣ Export Everything (All Races & Horses)</h4>
+                        <div class="excel-actions">
+                            <button class="btn" onclick="handleCopyExcelFormatAll()">📋 Copy All</button>
+                            <button class="btn btn-secondary" onclick="handleDownloadExcelFormatAll()">📥 Download All</button>
+                        </div>
+                    </div>
+
+                    <!-- Export Full Race -->
+                    <div class="excel-option">
+                        <h4>2️⃣ Export Full Race (All Horses in Race)</h4>
+                        <select id="excelRaceSelectFull" class="excel-select">
+                            <option value="">Select Race...</option>
+                        </select>
+                        <div class="excel-actions">
+                            <button class="btn" onclick="handleCopyExcelFormatFullRace()">📋 Copy Race</button>
+                            <button class="btn btn-secondary" onclick="handleDownloadExcelFormatFullRace()">📥 Download Race</button>
+                        </div>
+                    </div>
+
+                    <!-- Export Single Horse -->
+                    <div class="excel-option">
+                        <h4>3️⃣ Export Single Horse</h4>
+                        <div class="excel-selectors">
+                            <select id="excelRaceSelect" class="excel-select">
+                                <option value="">Select Race...</option>
+                            </select>
+                            <select id="excelHorseSelect" class="excel-select">
+                                <option value="">Select Horse...</option>
+                            </select>
+                        </div>
+                        <div class="excel-actions">
+                            <button class="btn" onclick="handleCopyExcelFormat()">📋 Copy Horse</button>
+                            <button class="btn btn-secondary" onclick="handleDownloadExcelFormat()">📥 Download Horse</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -54,7 +97,8 @@
         </div>
     </div>
 
-    <!-- Load scripts in order: selectors -> parser -> export -> ui -->
+    <!-- Load scripts in order: constants -> selectors -> parser -> export -> ui -->
+    <script src="constants.js"></script>
     <script src="selectors.js"></script>
     <script src="parser.js"></script>
     <script src="export.js"></script>

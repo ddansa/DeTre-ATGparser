@@ -74,9 +74,11 @@ const SELECTORS = {
     cells: {
         horseCell: {
             startNumber: '[data-start-number]',
-            horseName: '[startlist-export-id="startlist-cell-horse-split-export"]',
-            ageAndSex: '[startlist-export-id="startlist-cell-ageAndSex-split-export"]',
-            driver: '[startlist-export-id="startlist-cell-driver-split-export"]'
+            // Support both normal and scratched horses
+            horseName: '[startlist-export-id^="startlist-cell-horse-split-export"]',
+            ageAndSex: '[startlist-export-id^="startlist-cell-ageAndSex-split-export"]',
+            driver: '[startlist-export-id^="startlist-cell-driver-split-export"]',
+            trainer: '[startlist-export-id="startlist-cell-trainer-export"]'
         },
         statsCell: {
             primary: '[data-test-id="startlist-cell-stats"]',

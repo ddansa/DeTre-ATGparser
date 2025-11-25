@@ -1,14 +1,12 @@
-# Test files
-test-previous-starts.html
-Extracted-body.html
-basedump.txt
-previoustableexample.html
-Expandedprevioustableexample.html
-V64 Färjestad _ 2025-11-24 _ ATG.htm
-V85 Solvalla _ 2025-11-29 _ ATG.htm
-V85 Solvalla _ 2025-11-29 _ ATG_files/
-html_parser.py
-HorseExtractor.html
+# Test files and documentation
+test/
+
+# Sample HTML files from ATG
+*.htm
+*_files/
+
+# Python scripts
+*.py
 
 # OS files
 .DS_Store

@@ -115,8 +115,56 @@ function displayResults(data) {
     };
     document.getElementById('preview').textContent = JSON.stringify(previewData, null, 2);
 
+    // Populate race and horse selectors for Excel export
+    populateExcelSelectors(data);
+
     // Show results section
     document.getElementById('resultsSection').style.display = 'block';
+}
+
+function populateExcelSelectors(data) {
+    const raceSelect = document.getElementById('excelRaceSelect');
+    const raceSelectFull = document.getElementById('excelRaceSelectFull');
+    const horseSelect = document.getElementById('excelHorseSelect');
+    
+    // Clear existing options
+    raceSelect.innerHTML = '<option value="">Select Race...</option>';
+    raceSelectFull.innerHTML = '<option value="">Select Race...</option>';
+    horseSelect.innerHTML = '<option value="">Select Horse...</option>';
+    
+    // Populate both race selectors
+    data.races.forEach(race => {
+        // For single horse selector
+        const option1 = document.createElement('option');
+        option1.value = race.raceId;
+        option1.textContent = `Race ${race.raceId} - ${race.metadata.track || 'Unknown Track'}`;
+        raceSelect.appendChild(option1);
+        
+        // For full race selector
+        const option2 = document.createElement('option');
+        option2.value = race.raceId;
+        option2.textContent = `Race ${race.raceId} - ${race.metadata.track || 'Unknown Track'}`;
+        raceSelectFull.appendChild(option2);
+    });
+    
+    // Update horses when race is selected (for single horse export)
+    raceSelect.addEventListener('change', function() {
+        const selectedRaceId = this.value;
+        horseSelect.innerHTML = '<option value="">Select Horse...</option>';
+        
+        if (selectedRaceId) {
+            const race = data.races.find(r => r.raceId === selectedRaceId);
+            if (race) {
+                race.horses.forEach(horse => {
+                    const option = document.createElement('option');
+                    const horseNum = horse.startNumber || horse.horseNumber;
+                    option.value = horseNum;
+                    option.textContent = `#${horseNum} - ${horse.horseName || 'Unknown'}`;
+                    horseSelect.appendChild(option);
+                });
+            }
+        }
+    });
 }
 
 function reset() {
@@ -143,6 +191,118 @@ function handleCopyToClipboard() {
     }).catch(err => {
         showStatus('Failed to copy to clipboard', 'error');
     });
+}
+
+function handleCopyExcelFormat() {
+    const raceId = document.getElementById('excelRaceSelect').value;
+    const horseNumber = document.getElementById('excelHorseSelect').value;
+    
+    if (!raceId || !horseNumber) {
+        showStatus('Please select both race and horse', 'error');
+        setTimeout(hideStatus, 3000);
+        return;
+    }
+    
+    try {
+        copyExcelFormatToClipboard(extractedData, raceId, horseNumber).then(() => {
+            showStatus('Excel format copied to clipboard! Ready to paste into Excel.', 'success');
+            setTimeout(hideStatus, 3000);
+        }).catch(err => {
+            showStatus('Failed to copy to clipboard: ' + err.message, 'error');
+            setTimeout(hideStatus, 3000);
+        });
+    } catch (err) {
+        showStatus('Error: ' + err.message, 'error');
+        setTimeout(hideStatus, 3000);
+    }
+}
+
+function handleDownloadExcelFormat() {
+    const raceId = document.getElementById('excelRaceSelect').value;
+    const horseNumber = document.getElementById('excelHorseSelect').value;
+    
+    if (!raceId || !horseNumber) {
+        showStatus('Please select both race and horse', 'error');
+        setTimeout(hideStatus, 3000);
+        return;
+    }
+    
+    try {
+        downloadExcelFormat(extractedData, raceId, horseNumber);
+        showStatus('Excel format downloaded!', 'success');
+        setTimeout(hideStatus, 3000);
+    } catch (err) {
+        showStatus('Error: ' + err.message, 'error');
+        setTimeout(hideStatus, 3000);
+    }
+}
+
+function handleCopyExcelFormatAll() {
+    try {
+        copyExcelFormatAllToClipboard(extractedData).then(() => {
+            showStatus('All races copied to clipboard! Ready to paste into Excel.', 'success');
+            setTimeout(hideStatus, 3000);
+        }).catch(err => {
+            showStatus('Failed to copy to clipboard: ' + err.message, 'error');
+            setTimeout(hideStatus, 3000);
+        });
+    } catch (err) {
+        showStatus('Error: ' + err.message, 'error');
+        setTimeout(hideStatus, 3000);
+    }
+}
+
+function handleDownloadExcelFormatAll() {
+    try {
+        downloadExcelFormatAll(extractedData);
+        showStatus('All races downloaded!', 'success');
+        setTimeout(hideStatus, 3000);
+    } catch (err) {
+        showStatus('Error: ' + err.message, 'error');
+        setTimeout(hideStatus, 3000);
+    }
+}
+
+function handleCopyExcelFormatFullRace() {
+    const raceId = document.getElementById('excelRaceSelectFull').value;
+    
+    if (!raceId) {
+        showStatus('Please select a race', 'error');
+        setTimeout(hideStatus, 3000);
+        return;
+    }
+    
+    try {
+        copyExcelFormatFullRaceToClipboard(extractedData, raceId).then(() => {
+            showStatus('Full race copied to clipboard! Ready to paste into Excel.', 'success');
+            setTimeout(hideStatus, 3000);
+        }).catch(err => {
+            showStatus('Failed to copy to clipboard: ' + err.message, 'error');
+            setTimeout(hideStatus, 3000);
+        });
+    } catch (err) {
+        showStatus('Error: ' + err.message, 'error');
+        setTimeout(hideStatus, 3000);
+    }
+}
+
+function handleDownloadExcelFormatFullRace() {
+    const raceId = document.getElementById('excelRaceSelectFull').value;
+    
+    if (!raceId) {
+        showStatus('Please select a race', 'error');
+        setTimeout(hideStatus, 3000);
+        return;
+    }
+    
+    try {
+        downloadExcelFormatFullRace(extractedData, raceId);
+        showStatus('Full race downloaded!', 'success');
+        setTimeout(hideStatus, 3000);
+    } catch (err) {
+        showStatus('Error: ' + err.message, 'error');
+        setTimeout(hideStatus, 3000);
+    }
 }
 
 // Initialize when DOM is ready
