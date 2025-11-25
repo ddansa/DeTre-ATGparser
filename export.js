@@ -72,10 +72,11 @@ function copyToClipboard(extractedData) {
     return navigator.clipboard.writeText(text);
 }
 
-function convertToExcelFormat(race, horseNumber) {
+function convertToExcelFormat(race, horseNumber, includeRaceInfo = true) {
     // Custom Excel-friendly format for single horse in a race
     // Format: Two columns (Label | Value) for easy pasting into Excel
     // Previous starts are numbered from most recent: Date-5, Date-4, etc.
+    // includeRaceInfo: set to false when exporting multiple horses to avoid duplication
     
     const horse = race.horses.find(h => 
         h.startNumber === String(horseNumber)
@@ -92,23 +93,24 @@ function convertToExcelFormat(race, horseNumber) {
         // Skip previousStarts (handled separately at the end)
         if (key === 'previousStarts') return;
         
-        // Convert camelCase to Title Case for label
-        const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+        // Use property name as-is (camelCase)
         const value = horse[key];
         
         // Include all fields, even empty ones
-        rows.push([label, value !== undefined && value !== null ? value : '']);
+        rows.push([key, value !== undefined && value !== null ? value : '']);
     });
     
-    // Race metadata
-    rows.push(['', '']); // Separator
-    rows.push(['--- RACE INFO ---', '']);
-    rows.push(['Race Track', race.metadata.track || '']);
-    rows.push(['Race Distance', race.metadata.distance || '']);
-    rows.push(['Race Type', race.metadata.raceType || '']);
-    rows.push(['Start Type', race.metadata.startType || '']);
-    if (race.metadata.description) {
-        rows.push(['Race Description', race.metadata.description]);
+    // Race metadata (only if requested - skip for multi-horse exports)
+    if (includeRaceInfo) {
+        rows.push(['', '']); // Separator
+        rows.push(['--- RACE INFO ---', '']);
+        rows.push(['raceTrack', race.metadata.track || '']);
+        rows.push(['raceDistance', race.metadata.distance || '']);
+        rows.push(['raceType', race.metadata.raceType || '']);
+        rows.push(['startType', race.metadata.startType || '']);
+        if (race.metadata.description) {
+            rows.push(['raceDescription', race.metadata.description]);
+        }
     }
     
     // Previous starts section
@@ -175,9 +177,22 @@ function convertToExcelFormatFullRace(race) {
     // Export all horses in a race, separated by blank rows
     const allHorsesData = [];
     
+    // Add race info once at the top
+    allHorsesData.push('--- RACE INFO ---\t');
+    allHorsesData.push(`raceId\t${race.raceId}`);
+    allHorsesData.push(`raceTrack\t${race.metadata.track || ''}`);
+    allHorsesData.push(`raceDistance\t${race.metadata.distance || ''}`);
+    allHorsesData.push(`raceType\t${race.metadata.raceType || ''}`);
+    allHorsesData.push(`startType\t${race.metadata.startType || ''}`);
+    if (race.metadata.description) {
+        allHorsesData.push(`raceDescription\t${race.metadata.description}`);
+    }
+    allHorsesData.push('\n========================================\n');
+    
+    // Add each horse without race info
     race.horses.forEach((horse, index) => {
         const horseNum = horse.startNumber;
-        const horseData = convertToExcelFormat(race, horseNum);
+        const horseData = convertToExcelFormat(race, horseNum, false); // Don't include race info
         allHorsesData.push(horseData);
         
         // Add separator between horses (except after last one)
@@ -194,7 +209,8 @@ function convertToExcelFormatAll(extractedData) {
     const allRacesData = [];
     
     extractedData.races.forEach((race, index) => {
-        allRacesData.push(`-------- RACE ${race.raceId} - ${race.metadata.track || 'Unknown'} --------\n`);
+        // Race header
+        allRacesData.push(`======== RACE ${race.raceId} - ${race.metadata.track || 'Unknown'} ========\n`);
         allRacesData.push(convertToExcelFormatFullRace(race));
         
         // Add separator between races (except after last one)
