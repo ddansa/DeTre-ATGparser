@@ -2,35 +2,19 @@
 
 A browser-based tool for extracting and analyzing horse racing data from ATG (Swedish Horse Racing) saved pages.
 
-## 🎯 Features
+**This tool does not connect to any server or upload any data externally - everything is done in your browser locally.**
 
-- **Zero Dependencies** - Runs entirely in the browser, no installation required
-- **Comprehensive Data Extraction** - Parses race metadata, horse details, statistics, and previous race history
-- **Multiple Output Formats** - Export as JSON or CSV
-- **Previous Starts Analysis** - Extracts detailed race history including track, driver, placement, times, and comments
-- **Flexible Input** - Accepts HTML, TXT, or any text-based file format
-- **Debug Mode** - Optional detailed output for troubleshooting
-- **Robust Parsing** - Configurable selectors with fallback mechanisms
+> **Note:** This project was developed with AI assistance.
 
 ## 🚀 Quick Start
 
-### Method 1: Use the Bookmarklet (Recommended)
+### Using the Bookmarklet (Recommended)
 
 1. Open [BOOKMARKLET.md](BOOKMARKLET.md) and follow the installation instructions
 2. Navigate to any ATG race page
 3. Click the bookmarklet to download the rendered HTML
-4. Upload the file to the extractor tool
-
-### Method 2: Manual Extraction
-
-1. Open an ATG race page in your browser
-2. Open Developer Tools (F12)
-3. In the Console, paste:
-   ```javascript
-   copy(document.body.outerHTML)
-   ```
-4. Save the copied HTML to a file
-5. Upload to the extractor tool
+4. Upload the downloaded file to the extractor tool
+5. Choose your export format (JSON, CSV, or Excel TSV)
 
 ## 📊 Extracted Data
 
@@ -40,12 +24,15 @@ A browser-based tool for extracting and analyzing horse racing data from ATG (Sw
 - Complete startlist
 
 ### Horse Details
+> **Note:** Exported data depends on what columns you have enabled in ATG's website settings
+
 - Basic info (name, age, sex, driver, trainer)
 - Performance statistics (life stats, current year, previous year)
 - Betting data (odds, distribution, trends)
 - Earnings and records
 - Shoe configuration
 - Expert comments
+
 
 ### Previous Starts (Last 5 Races)
 - Date and track
@@ -56,22 +43,6 @@ A browser-based tool for extracting and analyzing horse racing data from ATG (Sw
 - Odds and prize money
 - Race commentary
 
-## 🛠️ Technical Details
-
-### Project Structure
-
-```
-├── index.html          # Main HTML page
-├── styles.css          # Styling
-├── parser.js           # Core parsing logic
-├── export.js           # JSON/CSV export functionality
-├── ui.js               # User interface handling
-├── selectors.js        # Configurable CSS selectors
-├── BOOKMARKLET.md      # Bookmarklet installation guide
-├── SELECTORS_GUIDE.md  # Guide for updating selectors
-└── README.md           # This file
-```
-
 ### Browser Compatibility
 
 - ✅ Chrome/Edge (recommended)
@@ -81,10 +52,29 @@ A browser-based tool for extracting and analyzing horse racing data from ATG (Sw
 
 ## 📝 Usage
 
-1. Open `index.html` in your browser (or visit the GitHub Pages URL)
-2. Drag and drop a saved ATG race page HTML file
+### Getting the HTML File
+
+**Option 1: Bookmarklet (Recommended)**
+- Use the bookmarklet from [BOOKMARKLET.md](BOOKMARKLET.md) to download the rendered HTML with one click
+
+**Option 2: Manual Copy**
+1. Open an ATG race page
+2. Press `F12` to open Developer Tools
+3. In the Elements/Inspector tab, right-click the `<body>` element
+4. Select "Copy" → "Copy outerHTML"
+5. Paste into a text editor and save as `.html` file
+
+### Using the Tool
+
+1. Visit **https://ddansa.github.io/DeTre-ATGparser/** or open `index.html` locally
+2. Drag and drop your saved HTML file
 3. Wait for parsing to complete
-4. Download as JSON or CSV, or copy to clipboard
+4. Choose your export option:
+   - **JSON** - Full structured data, copy to clipboard or download
+   - **CSV** - Flat format for spreadsheet analysis
+   - **Excel (Single Horse)** - Vertical key-value layout for one horse
+   - **Excel (Full Race)** - All horses in a race with race info at top
+   - **Excel (All Races)** - Complete export of all races and horses
 
 ## 🔧 Configuration
 
@@ -98,14 +88,6 @@ Enable debug mode to include table headers in the JSON output for troubleshootin
 
 This project is provided as-is for personal use.
 
-## 🤝 Contributing
-
-This tool is designed to parse publicly available race information from saved HTML pages. It does not interact with ATG's servers or bypass any authentication.
-
 ## ⚠️ Disclaimer
 
-This tool is for personal data analysis only. Always respect ATG's terms of service and use responsibly.
-
----
-
-*Web-app för att läsa av ATG's startlistor och dumpa relevant data*
+This tool is for personal data analysis only. It parses publicly available race information from saved HTML pages and does not interact with ATG's servers or bypass any authentication. Always respect ATG's terms of service and use responsibly.
