@@ -8,11 +8,16 @@
 
 ### Step 2: Create the Bookmarklet
 
-**Method: Manual Creation**
 1. Right-click your bookmarks bar → "Add page" or "New bookmark"
 2. Name it: `📥 Extract ATG Race Data` (or any name you like)
 3. Copy the **entire code** below (including `javascript:`) and paste it as the URL/Location:
 
+**With Confirmation (Recommended):**
+```javascript
+javascript:(function(){if(confirm('Download ATG race data as HTML file?')){const html=document.body.outerHTML;const blob=new Blob([html],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');const date=new Date().toISOString().split('T')[0];const title=document.title.replace(/[^a-z0-9]/gi,'_');a.href=url;a.download=`ATG_${title}_${date}.html`;a.click();URL.revokeObjectURL(url);}})();
+```
+
+**Without Confirmation (Auto-download):**
 ```javascript
 javascript:(function(){const html=document.body.outerHTML;const blob=new Blob([html],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');const date=new Date().toISOString().split('T')[0];const title=document.title.replace(/[^a-z0-9]/gi,'_');a.href=url;a.download=`ATG_${title}_${date}.html`;a.click();URL.revokeObjectURL(url);})();
 ```
@@ -24,7 +29,7 @@ javascript:(function(){const html=document.body.outerHTML;const blob=new Blob([h
 2. Wait for the page to fully load
 3. Click the bookmarklet in your bookmarks bar
 4. The HTML file will download automatically!
-5. Upload the downloaded file to the Horse Extractor tool
+5. Upload the downloaded file to the extractor tool at https://ddansa.github.io/DeTre-ATGparser/
 
 ---
 
@@ -67,6 +72,23 @@ javascript:(function(){const html=document.body.outerHTML;const blob=new Blob([h
 
 If the bookmarklet doesn't work, you can paste this in the browser console (F12):
 
+**With Confirmation:**
+```javascript
+if (confirm('Download ATG race data as HTML file?')) {
+    const html = document.body.outerHTML;
+    const blob = new Blob([html], {type: 'text/html'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const date = new Date().toISOString().split('T')[0];
+    const title = document.title.replace(/[^a-z0-9]/gi, '_');
+    a.href = url;
+    a.download = `ATG_${title}_${date}.html`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+```
+
+**Without Confirmation:**
 ```javascript
 const html = document.body.outerHTML;
 const blob = new Blob([html], {type: 'text/html'});

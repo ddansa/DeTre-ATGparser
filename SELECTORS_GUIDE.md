@@ -8,6 +8,8 @@ The parser uses CSS selectors to find elements in the HTML. Each selector has:
 - **Primary selector**: The main way to find the element
 - **Fallback selectors**: Alternative ways if the primary fails
 
+The parser also includes **dynamic column detection** for the "Previous Starts" table, which automatically adapts to column order changes by reading table headers instead of relying on fixed positions.
+
 ## Common Fixes
 
 ### 1. Game Container Not Found
