@@ -187,7 +187,7 @@ function convertToExcelFormatFullRace(race) {
     if (race.metadata.description) {
         allHorsesData.push(`raceDescription\t${race.metadata.description}`);
     }
-    allHorsesData.push('\n========================================\n');
+    allHorsesData.push('\n----------------------------------------\n');
     
     // Add each horse without race info
     race.horses.forEach((horse, index) => {
@@ -210,7 +210,7 @@ function convertToExcelFormatAll(extractedData) {
     
     extractedData.races.forEach((race, index) => {
         // Race header
-        allRacesData.push(`======== RACE ${race.raceId} - ${race.metadata.track || 'Unknown'} ========\n`);
+        allRacesData.push(`-------- RACE ${race.raceId} - ${race.metadata.track || 'Unknown'} --------\n`);
         allRacesData.push(convertToExcelFormatFullRace(race));
         
         // Add separator between races (except after last one)
