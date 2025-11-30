@@ -84,6 +84,15 @@ The parser uses configurable selectors defined in `selectors.js`. If ATG updates
 
 Enable debug mode to include table headers in the JSON output for troubleshooting parsing issues.
 
+## 📚 Third-Party Libraries
+
+This project uses the following open-source libraries:
+
+- **[SheetJS Community Edition](https://sheetjs.com/)** (Apache 2.0 License)
+  - Used for generating proper `.xlsx` Excel files
+  - Version: 0.20.1
+  - Copyright (c) 2012-present SheetJS LLC
+
 ## 📄 License
 
 This project is provided as-is for personal use.

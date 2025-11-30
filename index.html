@@ -14,7 +14,6 @@
         </div>
 
         <div class="content">
-            <div class="status" id="status"></div>
             
             <div class="upload-section" id="uploadSection">
                 <div class="upload-icon">📁</div>
@@ -33,30 +32,26 @@
             <div class="loader" id="loader"></div>
 
             <div class="results-section" id="resultsSection">
-                <div class="stats" id="stats"></div>
+                <div class="results-header">
+                    <div class="stats" id="stats"></div>
+                    <button class="btn btn-secondary btn-header" onclick="reset()">🔄 Process Another File</button>
+                </div>
                 
                 <div class="preview">
                     <h3>Data Preview (First 3 horses)</h3>
                     <pre id="preview"></pre>
                 </div>
 
-                <div class="actions">
-                    <button class="btn" onclick="handleDownloadJSON()">📥 Download JSON</button>
-                    <button class="btn" onclick="handleDownloadCSV()">📥 Download CSV</button>
-                    <button class="btn btn-secondary" onclick="handleCopyToClipboard()">📋 Copy JSON</button>
-                    <button class="btn btn-secondary" onclick="reset()">🔄 Process Another File</button>
-                </div>
-
                 <div class="excel-export-section">
                     <h3>📊 Excel Format Export</h3>
-                    <p class="excel-hint">Export data in vertical format for easy pasting into Excel</p>
+                    <p class="excel-hint">Export data in vertical format optimized for Excel analysis</p>
                     
                     <!-- Export Everything -->
                     <div class="excel-option">
                         <h4>1️⃣ Export Everything (All Races & Horses)</h4>
                         <div class="excel-actions">
+                            <button class="btn" onclick="handleDownloadExcelFormatAll()">📥 Download All</button>
                             <button class="btn" onclick="handleCopyExcelFormatAll()">📋 Copy All</button>
-                            <button class="btn btn-secondary" onclick="handleDownloadExcelFormatAll()">📥 Download All</button>
                         </div>
                     </div>
 
@@ -67,8 +62,8 @@
                             <option value="">Select Race...</option>
                         </select>
                         <div class="excel-actions">
-                            <button class="btn" onclick="handleCopyExcelFormatFullRace()">📋 Copy Race</button>
-                            <button class="btn btn-secondary" onclick="handleDownloadExcelFormatFullRace()">📥 Download Race</button>
+                            <button id="btnDownloadFullRace" class="btn" onclick="handleDownloadExcelFormatFullRace()" disabled>📥 Download Race</button>
+                            <button id="btnCopyFullRace" class="btn" onclick="handleCopyExcelFormatFullRace()" disabled>📋 Copy Race</button>
                         </div>
                     </div>
 
@@ -84,10 +79,25 @@
                             </select>
                         </div>
                         <div class="excel-actions">
-                            <button class="btn" onclick="handleCopyExcelFormat()">📋 Copy Horse</button>
-                            <button class="btn btn-secondary" onclick="handleDownloadExcelFormat()">📥 Download Horse</button>
+                            <button id="btnDownloadHorse" class="btn" onclick="handleDownloadExcelFormat()" disabled>📥 Download Horse</button>
+                            <button id="btnCopyHorse" class="btn" onclick="handleCopyExcelFormat()" disabled>📋 Copy Horse</button>
                         </div>
                     </div>
+                </div>
+
+                <!-- Advanced Export Options (Collapsible) -->
+                <div class="advanced-export-section">
+                    <details>
+                        <summary>🔧 Advanced Export Options (JSON/Excel Table)</summary>
+                        <div class="advanced-content">
+                            <p class="excel-hint">Full structured data exports for advanced analysis</p>
+                            <div class="actions">
+                                <button class="btn" onclick="handleDownloadJSON()">📥 Download JSON</button>
+                                <button class="btn" onclick="handleDownloadCSV()">📥 Download Excel Table</button>
+                                <button class="btn btn-secondary" onclick="handleCopyToClipboard()">📋 Copy JSON</button>
+                            </div>
+                        </div>
+                    </details>
                 </div>
             </div>
         </div>
@@ -97,11 +107,18 @@
         </div>
     </div>
 
-    <!-- Load scripts in order: constants -> selectors -> parser -> export -> ui -->
+    <!-- Load SheetJS library for proper Excel export -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    
+    <!-- Load scripts in order: constants -> selectors -> parser -> export -> excelExport -> ui -->
     <script src="constants.js"></script>
     <script src="selectors.js"></script>
     <script src="parser.js"></script>
     <script src="export.js"></script>
+    <script src="excelExport.js"></script>
     <script src="ui.js"></script>
+
+    <!-- Toast notification container -->
+    <div id="toastContainer" class="toast-container"></div>
 </body>
 </html>
