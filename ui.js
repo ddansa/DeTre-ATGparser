@@ -65,6 +65,9 @@ function showStatus(message, type) {
 
 function hideStatus() {
     // Legacy function - no longer needed with toasts
+    // Keep for backwards compatibility but make it safe
+    const statusEl = document.getElementById('status');
+    if (statusEl) statusEl.style.display = 'none';
 }
 
 function showLoader() {
