@@ -39,7 +39,7 @@ const ROW_PATTERNS = {
 // CSS CLASS PATTERNS
 // ============================================================================
 const CSS_PATTERNS = {
-    COMPACT_PREVIOUS_STARTS: 'CompactPreviousStartsTable',
+    PREVIOUS_STARTS_TABLE: 'PreviousStartsTable',
     MORE_DETAILS_AREA: 'moreDetailsArea',
     MORE_DETAILS_ITEM: 'moreDetailsItem',
     RACE_COMMENT_CELL: 'RaceCommentCell',

@@ -406,7 +406,7 @@ function extractPreviousStartField(cells, columnMap, fieldName, extractor = null
 }
 
 function extractPreviousStarts(extendedRow) {
-    const previousStartsTable = extendedRow.querySelector(`table[class*="${CSS_PATTERNS.COMPACT_PREVIOUS_STARTS}"]`);
+    const previousStartsTable = extendedRow.querySelector(`table[class*="${CSS_PATTERNS.PREVIOUS_STARTS_TABLE}"]`);
     if (!previousStartsTable) return [];
     
     const tbody = previousStartsTable.querySelector('tbody');
