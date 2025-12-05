@@ -47,7 +47,7 @@ function convertHorseToWorksheetData(race, horseNumber, includeRaceInfo = true) 
         
         const starts = horse.previousStarts.slice(0, EXCEL_CONFIG.MAX_PREVIOUS_STARTS);
         starts.forEach((start, index) => {
-            const num = EXCEL_CONFIG.MAX_PREVIOUS_STARTS - index;
+            const num = starts.length - index;
             rows.push(
                 [`Date-${num}`, start.date || ''],
                 [`Track-${num}`, start.track || ''],
@@ -59,6 +59,7 @@ function convertHorseToWorksheetData(race, horseNumber, includeRaceInfo = true) 
                 [`Odds-${num}`, start.odds || ''],
                 [`Prize-${num}`, start.prize || ''],
                 [`Wagon-${num}`, start.wagonType || ''],
+                [`Remarks-${num}`, start.remarks || ''],
                 [`Comment-${num}`, start.comment || '']
             );
             if (index < starts.length - 1) rows.push(['', '']);

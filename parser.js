@@ -389,6 +389,8 @@ function detectPreviousStartsColumns(thead) {
                 columnMap.driver = index;
             } else if (headerText.includes('VAGN') || headerText.includes('SULKY')) {
                 columnMap.sulky = index;
+            } else if (headerText.includes('ANM') || headerText.includes('REMARK')) {
+                columnMap.remarks = index;
             }
         }
     });
@@ -448,34 +450,19 @@ function extractPreviousStarts(extendedRow) {
                 start.raceLink = dateLink ? dateLink.getAttribute(ATTRIBUTES.HREF) : null;
             }
             
-            const track = extractPreviousStartField(cells, columnMap, 'track');
-            if (track) start.track = track;
-            
-            const driver = extractPreviousStartField(cells, columnMap, 'driver');
-            if (driver) start.driver = driver;
-            
-            const placement = extractPreviousStartField(cells, columnMap, 'place');
-            if (placement) start.placement = placement;
-            
-            const distanceTrack = extractPreviousStartField(cells, columnMap, 'distance');
-            if (distanceTrack) start.distanceTrack = distanceTrack;
-            
-            const kmTime = extractPreviousStartField(cells, columnMap, 'kmTime');
-            if (kmTime) start.kmTime = kmTime;
-            
-            const shoeInfo = extractPreviousStartField(cells, columnMap, 'shoes', extractShoeInfo);
-            if (shoeInfo) start.shoeInfo = shoeInfo;
-            
-            const odds = extractPreviousStartField(cells, columnMap, 'odds');
-            if (odds) start.odds = odds;
-            
-            const prize = extractPreviousStartField(cells, columnMap, 'firstPrize');
-            if (prize) start.prize = prize;
+            start.track = extractPreviousStartField(cells, columnMap, 'track') || '';
+            start.driver = extractPreviousStartField(cells, columnMap, 'driver') || '';
+            start.placement = extractPreviousStartField(cells, columnMap, 'place') || '';
+            start.distanceTrack = extractPreviousStartField(cells, columnMap, 'distance') || '';
+            start.kmTime = extractPreviousStartField(cells, columnMap, 'kmTime') || '';
+            start.shoeInfo = extractPreviousStartField(cells, columnMap, 'shoes', extractShoeInfo) || '';
+            start.odds = extractPreviousStartField(cells, columnMap, 'odds') || '';
+            start.prize = extractPreviousStartField(cells, columnMap, 'firstPrize') || '';
             
             const wagon = extractPreviousStartField(cells, columnMap, 'sulky');
-            if (wagon) {
-                start.wagonType = wagon.replace(TEXT_PATTERNS.WAGON_PREFIX, '').trim();
-            }
+            start.wagonType = wagon ? wagon.replace(TEXT_PATTERNS.WAGON_PREFIX, '').trim() : '';
+            
+            start.remarks = extractPreviousStartField(cells, columnMap, 'remarks') || '';
             
             if (isExpandedView) {
                 const commentIndex = cells.length - 1;
